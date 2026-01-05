@@ -67,9 +67,6 @@ const AuthForm = () => {
     },
   });
 
-  // Determine which form to use based on active tab
-  const activeForm = tab === "login" ? loginForm : signupForm;
-
   // Switch tabs and reset forms
   const handleTabSwitch = (newTab: "login" | "signup") => {
     setTab(newTab);
@@ -124,10 +121,6 @@ const AuthForm = () => {
     );
   };
 
-  const onSubmit = tab === "login" 
-    ? loginForm.handleSubmit(handleLoginSubmit)
-    : signupForm.handleSubmit(handleSignupSubmit);
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white px-4">
       <ToastContainer theme="dark" transition={Bounce} />
@@ -159,9 +152,57 @@ const AuthForm = () => {
           {tab === "login" ? "Login to continue your journey" : "Join us and get started today"}
         </p>
 
-        {/* Form */}
-        <form onSubmit={onSubmit} className="space-y-5">
-          {tab === "signup" && (
+        {/* Form - Conditional rendering based on tab */}
+        {tab === "login" ? (
+          <form onSubmit={loginForm.handleSubmit(handleLoginSubmit)} className="space-y-5">
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-2">Email Address</label>
+              <input
+                placeholder="Enter your email"
+                type="email"
+                {...loginForm.register("email")}
+                className={`w-full px-4 py-3 bg-gray-800/50 border rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 transition-all ${
+                  loginForm.formState.errors.email
+                    ? "border-red-500 focus:ring-red-500"
+                    : "border-gray-700/50 focus:ring-purple-500 focus:border-transparent"
+                }`}
+              />
+              {loginForm.formState.errors.email && (
+                <p className="mt-1.5 text-sm text-red-400">
+                  {loginForm.formState.errors.email.message}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-2">Password</label>
+              <input
+                placeholder="Enter your password"
+                type="password"
+                {...loginForm.register("password")}
+                className={`w-full px-4 py-3 bg-gray-800/50 border rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 transition-all ${
+                  loginForm.formState.errors.password
+                    ? "border-red-500 focus:ring-red-500"
+                    : "border-gray-700/50 focus:ring-purple-500 focus:border-transparent"
+                }`}
+              />
+              {loginForm.formState.errors.password && (
+                <p className="mt-1.5 text-sm text-red-400">
+                  {loginForm.formState.errors.password.message}
+                </p>
+              )}
+            </div>
+
+            <button
+              type="submit"
+              disabled={loginLoading}
+              className="w-full py-3.5 rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 font-semibold text-white shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed mt-6"
+            >
+              {loginLoading ? <Loading /> : "Login"}
+            </button>
+          </form>
+        ) : (
+          <form onSubmit={signupForm.handleSubmit(handleSignupSubmit)} className="space-y-5">
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-2">Full Name</label>
               <input
@@ -179,54 +220,54 @@ const AuthForm = () => {
                 </p>
               )}
             </div>
-          )}
 
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Email Address</label>
-            <input
-              placeholder="Enter your email"
-              type="email"
-              {...activeForm.register("email")}
-              className={`w-full px-4 py-3 bg-gray-800/50 border rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 transition-all ${
-                activeForm.formState.errors.email
-                  ? "border-red-500 focus:ring-red-500"
-                  : "border-gray-700/50 focus:ring-purple-500 focus:border-transparent"
-              }`}
-            />
-            {activeForm.formState.errors.email && (
-              <p className="mt-1.5 text-sm text-red-400">
-                {activeForm.formState.errors.email.message}
-              </p>
-            )}
-          </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-2">Email Address</label>
+              <input
+                placeholder="Enter your email"
+                type="email"
+                {...signupForm.register("email")}
+                className={`w-full px-4 py-3 bg-gray-800/50 border rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 transition-all ${
+                  signupForm.formState.errors.email
+                    ? "border-red-500 focus:ring-red-500"
+                    : "border-gray-700/50 focus:ring-purple-500 focus:border-transparent"
+                }`}
+              />
+              {signupForm.formState.errors.email && (
+                <p className="mt-1.5 text-sm text-red-400">
+                  {signupForm.formState.errors.email.message}
+                </p>
+              )}
+            </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">Password</label>
-            <input
-              placeholder="Enter your password"
-              type="password"
-              {...activeForm.register("password")}
-              className={`w-full px-4 py-3 bg-gray-800/50 border rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 transition-all ${
-                activeForm.formState.errors.password
-                  ? "border-red-500 focus:ring-red-500"
-                  : "border-gray-700/50 focus:ring-purple-500 focus:border-transparent"
-              }`}
-            />
-            {activeForm.formState.errors.password && (
-              <p className="mt-1.5 text-sm text-red-400">
-                {activeForm.formState.errors.password.message}
-              </p>
-            )}
-          </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-2">Password</label>
+              <input
+                placeholder="Enter your password"
+                type="password"
+                {...signupForm.register("password")}
+                className={`w-full px-4 py-3 bg-gray-800/50 border rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 transition-all ${
+                  signupForm.formState.errors.password
+                    ? "border-red-500 focus:ring-red-500"
+                    : "border-gray-700/50 focus:ring-purple-500 focus:border-transparent"
+                }`}
+              />
+              {signupForm.formState.errors.password && (
+                <p className="mt-1.5 text-sm text-red-400">
+                  {signupForm.formState.errors.password.message}
+                </p>
+              )}
+            </div>
 
-          <button
-            type="submit"
-            disabled={loginLoading || signupLoading}
-            className="w-full py-3.5 rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 font-semibold text-white shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed mt-6"
-          >
-            {loginLoading || signupLoading ? <Loading /> : tab === "login" ? "Login" : "Create Account"}
-          </button>
-        </form>
+            <button
+              type="submit"
+              disabled={signupLoading}
+              className="w-full py-3.5 rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 font-semibold text-white shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed mt-6"
+            >
+              {signupLoading ? <Loading /> : "Create Account"}
+            </button>
+          </form>
+        )}
       </div>
     </div>
   );

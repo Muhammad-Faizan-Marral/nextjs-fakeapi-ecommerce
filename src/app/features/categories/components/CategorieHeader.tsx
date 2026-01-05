@@ -1,5 +1,5 @@
 "use client";
-import { ChevronDown, Check, DollarSign } from "lucide-react";
+import { DollarSign } from "lucide-react";
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
 
@@ -8,7 +8,7 @@ type Props = {
   category?: string;
 };
 type FilterPrice = {
-  minPrice: number;
+  minPrice: number ;
   maxPrice: number | undefined;
 };
 
