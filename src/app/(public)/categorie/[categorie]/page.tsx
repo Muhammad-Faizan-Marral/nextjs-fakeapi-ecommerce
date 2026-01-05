@@ -6,14 +6,14 @@ import React, { useState } from "react";
 
 export type FilteredPrice = {
   minPrice: number;
-  maxPrice: number | null;
+  maxPrice: number | undefined;
 };
 
 const Page = () => {
   const { categorie } = useParams<{ categorie: string }>();
   const [priceFilter, setPriceFilter] = useState<FilteredPrice>({
     minPrice: 0,
-    maxPrice: null,
+    maxPrice: 0,
   });
   return (
     <div>

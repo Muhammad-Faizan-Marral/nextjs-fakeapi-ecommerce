@@ -21,32 +21,27 @@ export interface ShowButton {
   onlyWishlist?: boolean;
   categorySlug?: string;
   priceFilter?: FilteredPrice;
-    searchResults?: Product[]; // NEW: for search results
+  searchResults?: Product[];
 }
 
-const ProductList = ({ 
-  showButton = false, 
-  onlyWishlist = false, 
-  categorySlug, 
-  priceFilter ,
-  searchResults 
+const ProductList = ({
+  showButton = false,
+  onlyWishlist = false,
+  categorySlug,
+  priceFilter,
+  searchResults,
 }: ShowButton) => {
-  /* ---------------- REDUX ---------------- */
   const dispatch = useDispatch();
 
   const { cartsByUserId, activeUserId } = useSelector((state: RootState) => state.cart);
   const likedByUserId = useSelector((state: RootState) => state.wishlist.likedByUserId);
 
-  /* ---------------- USER-SPECIFIC WISHLIST IDS ---------------- */
   const likedIds = useMemo<number[]>(() => {
     if (!activeUserId) return [];
     return likedByUserId?.[activeUserId] ?? [];
   }, [activeUserId, likedByUserId]);
 
-  /* ---------------- LOCAL STATE ---------------- */
   const [limit, setLimit] = useState(16);
-
-  /* ---------------- API HOOKS ---------------- */
   const {
     data: allProducts,
     isLoading: allLoading,
@@ -64,12 +59,11 @@ const ProductList = ({
     maxPrice: priceFilter?.maxPrice,
   });
 
-  /* ---------------- PRODUCT SOURCE ---------------- */
   const productsSource: Product[] = useMemo(() => {
-     if (searchResults) return searchResults;
+    if (searchResults) return searchResults;
 
     return categorySlug ? (categoryProducts ?? []) : (allProducts ?? []);
-  }, [searchResults,categorySlug, categoryProducts, allProducts]);
+  }, [searchResults, categorySlug, categoryProducts, allProducts]);
 
   /* ---------------- FILTERED PRODUCTS ---------------- */
   const filteredProducts = useMemo(() => {
@@ -125,7 +119,7 @@ const ProductList = ({
     }
 
     dispatch(toggleLike({ userId: activeUserId, productId }));
-    
+
     const isCurrentlyLiked = likedIds.includes(productId);
     toast.success(isCurrentlyLiked ? "Removed from wishlist" : "Added to wishlist", {
       transition: Bounce,
@@ -151,15 +145,9 @@ const ProductList = ({
     });
   };
 
-  /* ---------------- UI ---------------- */
   return (
     <>
-      <ToastContainer 
-        theme="dark" 
-        transition={Bounce}
-        position="top-right"
-        autoClose={2000}
-      />
+      <ToastContainer theme="dark" transition={Bounce} position="top-right" autoClose={2000} />
 
       <div className="flex flex-wrap justify-center gap-4 p-4">
         {filteredProducts.map((item) => (
@@ -208,12 +196,8 @@ const ProductList = ({
             {/* CONTENT */}
             <div className="mt-3 flex flex-col flex-1">
               <div className="flex justify-between gap-2 items-start">
-                <p className="text-white font-semibold text-sm line-clamp-2 flex-1">
-                  {item.title}
-                </p>
-                <p className="text-[#9569D3] font-bold text-lg whitespace-nowrap">
-                  ${item.price}
-                </p>
+                <p className="text-white font-semibold text-sm line-clamp-2 flex-1">{item.title}</p>
+                <p className="text-[#9569D3] font-bold text-lg whitespace-nowrap">${item.price}</p>
               </div>
 
               <div className="flex items-center gap-1 mt-2">
@@ -240,10 +224,7 @@ const ProductList = ({
 
       {showButton && !onlyWishlist && (
         <div className="flex justify-center mt-8">
-          <Button 
-            onLoadMore={() => setLimit((prev) => prev + 16)} 
-            disabled={isPlaceholderData}
-          />
+          <Button onLoadMore={() => setLimit((prev) => prev + 16)} disabled={isPlaceholderData} />
         </div>
       )}
     </>
