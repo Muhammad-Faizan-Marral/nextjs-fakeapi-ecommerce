@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "@/app/store";
+import { RootState } from "@/app/lib/redux/store";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();

@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface WishlistState {
-  likedByUserId: Record<number, number[]>; // { userId: [productIds] }
+  likedByUserId: Record<number, number[]>; 
 }
 
 const initialState: WishlistState = {
@@ -26,10 +26,10 @@ const wishlistSlice = createSlice({
       const index = userLikes.indexOf(productId);
 
       if (index > -1) {
-        // Remove like
+        
         userLikes.splice(index, 1);
       } else {
-        // Add like
+        
         userLikes.push(productId);
       }
     },

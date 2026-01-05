@@ -1,12 +1,11 @@
 "use client";
-import React, { useState } from "react";
 import { LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
-import ProfileHeader from "@/app/components/profile/ProfileHeader";
-import UserProfileInfo from "@/app/components/profile/UserProfileInfo";
-import ProfileLiked from "@/app/components/profile/ProfileLiked";
+import ProfileHeader from "@/app/features/profile/components/ProfileHeader";
+import UserProfileInfo from "@/app/features/profile/components/UserProfileInfo";
+import ProfileLiked from "@/app/features/profile/components/ProfileLiked";
 import { useDispatch } from "react-redux";
-import { logout } from "@/app/features/auth/authSlice";
+import { logout } from "@/app/features/auth/slice";
 
 const ProfilePage = () => {
   const router = useRouter();

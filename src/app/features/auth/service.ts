@@ -1,7 +1,7 @@
 import { authApi } from "./api";
 import { AuthTokens, CreateUserPayload, LoginUserPayload } from "./types";
 
-/* ---------- CREATE USER ---------- */
+
 export const createUser = async (payload: CreateUserPayload) => {
   const res = await fetch(authApi.createUser, {
     method: "POST",
@@ -11,10 +11,10 @@ export const createUser = async (payload: CreateUserPayload) => {
 
   if (!res.ok) throw new Error("Signup failed");
 
-  return res.json(); // returns user object
+  return res.json(); 
 };
 
-/* ---------- LOGIN ---------- */
+
 export const loginUser = async (
   payload: LoginUserPayload,
 ): Promise<AuthTokens> => {
@@ -26,10 +26,10 @@ export const loginUser = async (
 
   if (!res.ok) throw new Error("Login failed");
 
-  return res.json(); // { access_token, refresh_token }
+  return res.json(); 
 };
 
-/* ---------- PROFILE ---------- */
+
 export const getProfile = async (token: string) => {
   const res = await fetch(authApi.profile, {
     headers: {
@@ -39,5 +39,5 @@ export const getProfile = async (token: string) => {
 
   if (!res.ok) throw new Error("Profile fetch failed");
 
-  return res.json(); // returns user
+  return res.json();
 };
