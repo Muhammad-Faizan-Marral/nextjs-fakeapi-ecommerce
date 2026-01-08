@@ -170,7 +170,7 @@ const ProductList = ({
               />
 
               {/* ACTION BUTTONS */}
-              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-3 opacity-0 group-hover:opacity-100 transition-all">
+              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-3 lg:opacity-0  group-hover:opacity-100 transition-all">
                 <Link href={`/productdetailsection/${item.id}`}>
                   <button className="bg-black/80 hover:bg-black p-2 rounded-full border border-gray-600 hover:border-purple-500 transition-all">
                     <FaRegEye className="text-white" />
