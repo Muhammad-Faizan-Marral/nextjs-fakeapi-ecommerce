@@ -6,7 +6,7 @@ import React from "react";
 
 const Page = () => {
   return (
-    <div>
+    <div className="bg-black">
       <CartHeader/>
       <div className="flex justify-between gap-16 lg:gap-7 items-start min-h-screen flex-col lg:flex-row p-13 ">
         <CartItem/>

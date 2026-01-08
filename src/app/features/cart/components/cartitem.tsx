@@ -18,7 +18,7 @@ const CartItem = () => {
   }
 
   return (
-    <div className="w-full">
+    <div className="w-full bg-black">
       {cartProducts.map((item) => (
         <div
           key={item.id}

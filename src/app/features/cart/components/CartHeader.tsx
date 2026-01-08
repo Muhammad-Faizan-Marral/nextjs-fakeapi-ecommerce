@@ -11,7 +11,7 @@ const CartHeader = () => {
   const cartCount = activeUserId && cartsByUserId[activeUserId] ? cartsByUserId[activeUserId].length : 0;
 
   return (
-    <div className="p-13">
+    <div className="p-13 bg-black">
       <div className="flex flex-col gap-1">
         <h2 className="text-3xl font-black text-white tracking-tight">
           Your Cart <span className="text-gray-500 font-medium text-lg ml-2">({cartCount})</span>
