@@ -17,30 +17,19 @@ const Header = () => {
   const pathname = usePathname();
   const router = useRouter();
   const dispatch = useDispatch();
-  
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [profileImage, setProfileImage] = useState<string>("");
 
- 
   const debouncedSearchQuery = useDebounce(searchQuery, 1500);
 
+  const { isAuthenticated, user } = useSelector((state: RootState) => state.auth);
 
-  const { isAuthenticated, user } = useSelector(
-    (state: RootState) => state.auth,
-  );
+  const { activeUserId, cartsByUserId } = useSelector((state: RootState) => state.cart);
 
+  const cartCount = activeUserId && cartsByUserId[activeUserId] ? cartsByUserId[activeUserId].length : 0;
 
-  const { activeUserId, cartsByUserId } = useSelector(
-    (state: RootState) => state.cart,
-  );
-
-  const cartCount =
-    activeUserId && cartsByUserId[activeUserId]
-      ? cartsByUserId[activeUserId].length
-      : 0;
-
-  // Load profile image from localStorage
   useEffect(() => {
     if (user?.email) {
       const savedImage = localStorage.getItem(`profileImage_${user.email}`);
@@ -50,24 +39,19 @@ const Header = () => {
     }
   }, [user?.email]);
 
-
   useEffect(() => {
-
     if (debouncedSearchQuery.trim() === "" && pathname === "/search") {
       router.push("/dashboard");
       return;
     }
 
-   
     if (debouncedSearchQuery.trim() !== "") {
       router.push(`/search?q=${encodeURIComponent(debouncedSearchQuery.trim())}`);
     }
   }, [debouncedSearchQuery, router, pathname]);
 
-  
   const hideSearchOn = ["/login", "/profile"];
   const showSearch = !hideSearchOn.some((route) => pathname.startsWith(route));
-
 
   const handleClearSearch = () => {
     setSearchQuery("");
@@ -86,9 +70,7 @@ const Header = () => {
             <div className="bg-gray-700/70 p-1.5 sm:p-2 rounded-full">
               <HiOutlineShoppingBag className="text-white text-lg sm:text-xl" />
             </div>
-            <h1 className="text-lg sm:text-xl font-bold text-white tracking-tight">
-              Cybershop
-            </h1>
+            <h1 className="text-lg sm:text-xl font-bold text-white tracking-tight">Cybershop</h1>
           </Link>
 
           {/* Desktop Search */}
@@ -103,7 +85,7 @@ const Header = () => {
                   className="w-full px-4 py-2 pl-10 pr-10 rounded-full bg-transparent border border-gray-700 text-white placeholder-gray-400 focus:border-purple-500 outline-none transition"
                 />
                 <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg" />
-                
+
                 {searchQuery && (
                   <button
                     onClick={handleClearSearch}
@@ -137,11 +119,7 @@ const Header = () => {
                   <div className="h-9 w-9 sm:h-10 sm:w-10 rounded-full bg-gradient-to-tr from-purple-500 to-blue-500 p-0.5 cursor-pointer hover:scale-105 transition-transform">
                     <div className="h-full w-full rounded-full overflow-hidden bg-black">
                       {profileImage ? (
-                        <img
-                          src={profileImage}
-                          alt="profile"
-                          className="h-full w-full object-cover"
-                        />
+                        <img src={profileImage} alt="profile" className="h-full w-full object-cover" />
                       ) : (
                         <div className="h-full w-full flex items-center justify-center bg-gray-800">
                           <User className="w-5 h-5 text-gray-400" />
@@ -151,22 +129,12 @@ const Header = () => {
                   </div>
                 </Link>
 
-            
-
-                <button
-                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                  className="sm:hidden flex items-center justify-center w-9 h-9 rounded-lg border border-gray-700 text-white hover:bg-gray-800 transition"
-                  aria-label="Toggle menu"
-                >
-                  {mobileMenuOpen ? (
-                    <HiX className="text-xl" />
-                  ) : (
-                    <HiOutlineMenuAlt3 className="text-xl" />
-                  )}
-                </button>
+               
               </>
             ) : (
               <>
+              
+
                 <div className="hidden sm:flex gap-2 lg:gap-3">
                   <Link
                     href="/login"
@@ -187,11 +155,7 @@ const Header = () => {
                   className="sm:hidden flex items-center justify-center w-9 h-9 rounded-lg border border-gray-700 text-white hover:bg-gray-800 transition"
                   aria-label="Toggle menu"
                 >
-                  {mobileMenuOpen ? (
-                    <HiX className="text-xl" />
-                  ) : (
-                    <HiOutlineMenuAlt3 className="text-xl" />
-                  )}
+                  {mobileMenuOpen ? <HiX className="text-xl" /> : <HiOutlineMenuAlt3 className="text-xl" />}
                 </button>
               </>
             )}
@@ -210,7 +174,7 @@ const Header = () => {
                 className="w-full px-4 py-2 pl-10 pr-10 rounded-full bg-transparent border border-gray-700 text-white placeholder-gray-400 focus:border-purple-500 outline-none transition text-sm"
               />
               <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-              
+
               {searchQuery && (
                 <button
                   onClick={handleClearSearch}
@@ -229,7 +193,7 @@ const Header = () => {
         <div className="sm:hidden border-t border-gray-800 bg-black/60 backdrop-blur-xl">
           <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col gap-3">
             {isAuthenticated ? (
-            <div></div>
+              <div></div>
             ) : (
               <>
                 <Link

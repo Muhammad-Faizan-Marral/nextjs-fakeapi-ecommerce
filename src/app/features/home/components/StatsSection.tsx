@@ -3,7 +3,7 @@ import React from "react";
 
 const StatsSection = () => {
   return (
-    <div className="bg-[#0E0E0E] border-t border-b py-3  border-gray-700 flex items-start md:items-center justify-start md:justify-around flex-col md:flex-row ">
+    <div className="bg-[#0E0E0E] border-t border-b py-3  border-gray-700 flex items-start md:items-center justify-start md:justify-around flex-col md:flex-row text-white ">
       <div className=" p-4 flex items-center gap-4">
         <div className="border-l border-gray-700 h-16 mt-2"></div>
         <div>
