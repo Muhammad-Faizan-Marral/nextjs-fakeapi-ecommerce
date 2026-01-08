@@ -43,7 +43,7 @@ const categoryContent: Record<string, { title: string; description: string }> = 
   },
 };
 
-const CategorieHeader = ({ onSetData, category = "electronics" }: Props) => {
+const CategorieHeader = ({ onSetData}: Props) => {
   const { categorie } = useParams<{ categorie: string }>();
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");

@@ -6,17 +6,15 @@ import { MdOutlineArrowRightAlt } from "react-icons/md";
 const LandingPage = () => {
   return (
     <div className="min-h-screen w-full bg-[linear-gradient(124deg,rgba(27,19,39,1)_0%,rgba(26,21,44,1)_51%,rgba(7,62,156,1)_51%,rgba(9,9,121,1)_52%,rgba(23,16,31,1)_100%)] relative overflow-hidden">
-      {/* Animated background elements */}
+     
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse delay-700"></div>
       </div>
 
-      {/* Main content container */}
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 lg:py-24">
         <div className="flex items-center justify-center lg:justify-between gap-8 md:gap-12 lg:gap-16 flex-col lg:flex-row">
           
-          {/* Left content */}
           <div className="w-full lg:w-1/2 max-w-2xl text-center lg:text-left space-y-6 sm:space-y-8 animate-fade-in">
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight">
               The Future of <br />
@@ -38,8 +36,6 @@ const LandingPage = () => {
                 </span>
               </button>
             </div>
-
-            {/* Feature highlights */}
             <div className="hidden sm:flex items-center justify-center lg:justify-start gap-8 pt-8 text-gray-300">
               <div className="text-center lg:text-left">
                 <p className="text-2xl md:text-3xl font-bold text-white">360°</p>

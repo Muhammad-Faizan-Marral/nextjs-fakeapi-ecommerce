@@ -5,6 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/lib/redux/store";
 import { updateProfile } from "@/app/features/auth/slice";
 
+type UserFormInfo = {
+  name: string;
+  email: string;
+  phone?: string;
+  address?: string;
+};
 const UserProfileInfo = () => {
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.auth.user);
@@ -18,6 +24,13 @@ const UserProfileInfo = () => {
   });
 
   if (!user) return null;
+
+  const mapUserToTempInfo = (user: UserFormInfo) => ({
+    name: user?.name ?? "",
+    email: user?.email ?? "",
+    phone: user?.phone ?? "",
+    address: user?.address ?? "",
+  });
 
   const handleSave = () => {
     dispatch(updateProfile(tempInfo));
@@ -35,9 +48,8 @@ const UserProfileInfo = () => {
   };
   const handleEdit = () => {
     setIsEditing(true);
-    setTempInfo(user);
+    setTempInfo(mapUserToTempInfo(user));
   };
-
 
   return (
     <div className="">

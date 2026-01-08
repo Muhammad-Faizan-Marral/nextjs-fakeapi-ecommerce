@@ -25,7 +25,7 @@ const WishlistHeader: React.FC<WishlistHeaderProps> = ({
 
   return (
     <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12 border-b border-gray-700 pb-10 mt-5">
-      {/* LEFT SIDE */}
+    
       <div className="flex flex-col gap-3 px-4 md:px-12">
         <h2 className="text-3xl md:text-5xl tracking-tight font-mono text-white font-medium">
           Your Wishlist

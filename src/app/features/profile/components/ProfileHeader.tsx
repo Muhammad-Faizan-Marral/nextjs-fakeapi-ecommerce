@@ -7,38 +7,34 @@ import { useDropzone } from "react-dropzone";
 
 const ProfileHeader = () => {
   const user = useSelector((state: RootState) => state.auth.user);
-  const [profileImage, setProfileImage] = useState<string>("");
+  const [profileImage, setProfileImage] = useState(() => {
+    if (typeof window === "undefined") return null;
+    return localStorage.getItem(`profileImage_${user?.email}`);
+  });
 
-  // Load profile image from localStorage on mount
-  useEffect(() => {
-    const savedImage = localStorage.getItem(`profileImage_${user?.email}`);
-    if (savedImage) {
-      setProfileImage(savedImage);
-    }
-  }, [user?.email]);
-
-  // Handle image drop/upload
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    const file = acceptedFiles[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64String = reader.result as string;
-        setProfileImage(base64String);
-        // Save to localStorage
-        localStorage.setItem(`profileImage_${user?.email}`, base64String);
-      };
-      reader.readAsDataURL(file);
-    }
-  }, [user?.email]);
+  const onDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      const file = acceptedFiles[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const base64String = reader.result as string;
+          setProfileImage(base64String)
+          localStorage.setItem(`profileImage_${user?.email}`, base64String);
+        };
+        reader.readAsDataURL(file);
+      }
+    },
+    [user?.email],
+  );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: {
-      'image/*': ['.jpeg', '.jpg', '.png', '.gif', '.webp']
+      "image/*": [".jpeg", ".jpg", ".png", ".gif", ".webp"],
     },
     maxFiles: 1,
-    multiple: false
+    multiple: false,
   });
 
   const removeProfileImage = () => {
@@ -51,7 +47,7 @@ const ProfileHeader = () => {
   return (
     <div>
       <div className="bg-[#0a0a0a] border border-gray-800 rounded-2xl p-6 lg:p-8 shadow-xl shadow-black/50 relative overflow-hidden group">
-        {/* Decorative Glow */}
+      
         <div className="absolute -top-20 -right-20 w-64 h-64 bg-blue-500/20 rounded-full blur-[80px] pointer-events-none group-hover:bg-purple-500/20 transition-colors duration-700"></div>
 
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative z-10">
@@ -61,16 +57,12 @@ const ProfileHeader = () => {
           </div>
 
           <div className="flex items-center gap-4 bg-[#1a1a1a] p-2 pr-6 rounded-full border border-gray-800">
-            {/* Profile Image with Hover Overlay */}
+       
             <div className="relative group/avatar">
               <div className="h-14 w-14 rounded-full bg-gradient-to-tr from-blue-500 to-purple-600 p-[2px]">
                 <div className="h-full w-full rounded-full overflow-hidden border-2 border-[#0a0a0a]">
                   {profileImage ? (
-                    <img
-                      alt="Profile"
-                      className="h-full w-full object-cover"
-                      src={profileImage}
-                    />
+                    <img alt="Profile" className="h-full w-full object-cover" src={profileImage} />
                   ) : (
                     <img
                       alt="Profile"
@@ -81,7 +73,7 @@ const ProfileHeader = () => {
                 </div>
               </div>
 
-              {/* Upload Button Overlay */}
+
               <div
                 {...getRootProps()}
                 className="absolute inset-0 rounded-full bg-black/70 opacity-0 group-hover/avatar:opacity-100 transition-opacity cursor-pointer flex items-center justify-center"

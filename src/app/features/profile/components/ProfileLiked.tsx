@@ -6,7 +6,6 @@ import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
 
-
 interface Product {
   id: number;
   title: string;
@@ -15,17 +14,14 @@ interface Product {
 }
 
 const ProfileLiked = () => {
- 
   const activeUserId = useSelector((state: RootState) => state.cart.activeUserId);
   const likedByUserId = useSelector((state: RootState) => state.wishlist.likedByUserId);
 
-  
   const wishlistIds = useMemo<number[]>(() => {
     if (!activeUserId) return [];
     return likedByUserId?.[activeUserId] ?? [];
   }, [activeUserId, likedByUserId]);
 
-  
   const { data: products = [] } = useQuery<Product[]>({
     queryKey: ["products"],
     queryFn: async () => {
@@ -43,9 +39,7 @@ const ProfileLiked = () => {
     return (
       <div className="bg-[#0a0a0a] border border-gray-800 rounded-2xl p-6">
         <h3 className="text-lg font-bold text-white mb-2">Liked</h3>
-        <p className="text-sm text-gray-500">
-          You have no liked products yet.
-        </p>
+        <p className="text-sm text-gray-500">You have no liked products yet.</p>
       </div>
     );
   }
@@ -54,10 +48,7 @@ const ProfileLiked = () => {
     <div className="bg-[#0a0a0a] border border-gray-800 rounded-2xl p-6 shadow-xl shadow-black/50">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-bold text-white">Liked</h3>
-        <Link
-          href="/liked"
-          className="text-sm text-blue-500 hover:text-purple-400 transition-colors"
-        >
+        <Link href="/liked" className="text-sm text-blue-500 hover:text-purple-400 transition-colors">
           View All
         </Link>
       </div>

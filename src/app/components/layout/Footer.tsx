@@ -6,10 +6,10 @@ const Footer = () => {
     <footer className="bg-[#0A0A0A] text-gray-400">
       <div className="mx-auto max-w-7xl px-6 pb-8 pt-16 sm:pt-24 lg:px-8 lg:pt-32">
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
-          {/* LOGO + DESCRIPTION */}
+        
           <div className="space-y-8">
             <div className="flex items-center gap-2 text-white">
-              <span className="material-symbols-outlined text-[32px]! text-primary">bolt</span>
+              <span className="material-symbols-outlined text-[32px]! text-primary"></span>
               <span className="font-display text-xl font-bold">CyberShop</span>
             </div>
 
@@ -17,7 +17,7 @@ const Footer = () => {
               Designing the future of consumer electronics. Immersive, sleek, and built for tomorrow.
             </p>
 
-            {/* SOCIAL ICONS */}
+        
             <div className="flex space-x-6">
               {/* FACEBOOK */}
               <a href="#" className="text-gray-400 hover:text-white transition-colors">

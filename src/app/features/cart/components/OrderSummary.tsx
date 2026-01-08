@@ -9,21 +9,21 @@ import { useEffect, useState } from "react";
 import { CartItem } from "@/app/features/cart/slice";
 
 const OrderSummary = () => {
-  const [subTotal, setSubTotal] = useState<number>(0);
-  const [tax, setTax] = useState<number>(6);
-  const [total, setTotal] = useState<number>();
+ 
   const { activeUserId, cartsByUserId } = useSelector((state: RootState) => state.cart);
+ const cartItems: CartItem[] =
+  activeUserId && cartsByUserId[activeUserId]
+    ? cartsByUserId[activeUserId]
+    : [];
 
-  const cartCount = activeUserId && cartsByUserId[activeUserId] ? cartsByUserId[activeUserId] : 0;
 
-  useEffect(() => {
-    let total = 0;
-    cartCount.forEach((item: CartItem) => {
-      total += item.price * item.quantity;
-    });
-    setSubTotal(total);
-    setTotal(tax + total);
-  }, [cartCount]);
+  const TAX = 6;
+
+const subTotal = cartItems.reduce(
+  (sum, item) => sum + item.price * item.quantity,
+  0
+);
+const total = subTotal + TAX;
 
   return (
     <div className="sticky top-12 w-full -mt-12  ">
@@ -43,7 +43,7 @@ const OrderSummary = () => {
 
           <div className="flex justify-between text-gray-400">
             <span>Tax estimate</span>
-            <span className="text-white font-medium">${tax}</span>
+            <span className="text-white font-medium">${TAX}</span>
           </div>
         </div>
 
